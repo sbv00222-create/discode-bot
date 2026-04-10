@@ -1,0 +1,10 @@
+# Local Netlify folder
+.netlify
+
+# Discord bot
+__pycache__/
+*.pyc
+.env
+.env.discord
+venv/
+*.log
