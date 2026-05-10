@@ -2,6 +2,22 @@ import discord
 from discord.ext import commands
 import re
 import os
+from threading import Thread
+from flask import Flask
+
+# Flask 웹서버 (UptimeRobot용)
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Bot is alive!"
+
+def run():
+    app.run(host='0.0.0.0', port=8080)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
 
 # 봇 설정
 intents = discord.Intents.default()
@@ -54,5 +70,6 @@ async def on_message(message):
 
 # 봇 실행
 if __name__ == '__main__':
+    keep_alive()  # 웹서버 시작
     TOKEN = os.getenv('DISCORD_BOT_TOKEN') or os.getenv('TOKEN')
     bot.run(TOKEN)
